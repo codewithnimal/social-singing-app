@@ -15,9 +15,9 @@ venv/
 .venv/
 env/
 
-# Environment variables
-.env
-*.env
+# Environment variables (Allowing .env files as requested by user)
+# .env
+# *.env
 
 # Database files
 *.db
