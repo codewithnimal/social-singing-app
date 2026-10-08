@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List, Optional
 
 class MessageCreate(BaseModel):
-    content: Optional[str] = Field(None, max_length=2000, description="Text content of the message")
+    content: str = Field(..., min_length=1, max_length=2000, description="Text content of the message")
     client_msg_id: Optional[str] = Field(None, description="Optional UUID from client to prevent duplicate sends")
     audio_duration_ms: Optional[int] = Field(None, description="Optional audio duration in milliseconds")
 
