@@ -1,6 +1,7 @@
-.\venv\Scripts\python -m uvicorn src.main:app --reload
+Set-Location backend
+.\venv\Scripts\python.exe -m uvicorn src.main:app --reload
 
-cd d:\Prograamming\RAG\vcapp\mobile
-npm install     # Just to ensure all dependencies are linked
+# In a separate terminal:
+Set-Location vibelyfe
+npm install
 npx expo start
-n

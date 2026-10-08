@@ -1,9 +1,8 @@
 from src.db.session import SessionLocal
 from src.models.user import User
 from src.models.friendship import Friendship, FriendshipStatus
-from src.models.chat import Conversation, Message
+from src.models.chat import Message
 from src.core.security import get_password_hash
-import random
 
 def seed_data():
     db = SessionLocal()
@@ -52,39 +51,21 @@ def seed_data():
             db.add(fs)
     db.commit()
     
-    # 3. Create some messages between user1 and user2
+    # 3. Remove the demo conversation messages but keep both test users and their friendship
     user2 = users[1]
-    print(f"Creating messages between {user1.username} and {user2.username}...")
+    print(f"Removing demo messages between {user1.username} and {user2.username}...")
     
-    # Get or create conversation
-    u1_id, u2_id = min(user1.id, user2.id), max(user1.id, user2.id)
-    conv = db.query(Conversation).filter(
-        Conversation.user1_id == u1_id, Conversation.user2_id == u2_id
-    ).first()
-    
-    if not conv:
-        conv = Conversation(user1_id=u1_id, user2_id=u2_id)
-        db.add(conv)
+    from src.repositories.chat import ConversationRepository
+    conv_repo = ConversationRepository()
+    conv = conv_repo.get_by_users(db, user1.id, user2.id)
+    if conv:
+        db.query(Message).filter(Message.conversation_id == conv.id).delete(
+            synchronize_session=False
+        )
         db.commit()
-        db.refresh(conv)
+        print("Demo messages removed.")
         
-    # Check if messages already exist
-    msg_count = db.query(Message).filter(Message.conversation_id == conv.id).count()
-    if msg_count == 0:
-        for i in range(1, 16):
-            sender = user1 if i % 2 != 0 else user2
-            msg = Message(
-                conversation_id=conv.id,
-                sender_id=sender.id,
-                content=f"Hello, this is message number {i} from {sender.username}!"
-            )
-            db.add(msg)
-        db.commit()
-        print("Messages created.")
-    else:
-        print("Messages already exist.")
-        
-    print("Database successfully seeded with 20 users and chat data.")
+    print("Database successfully seeded with 20 users and friendships.")
     db.close()
 
 if __name__ == "__main__":

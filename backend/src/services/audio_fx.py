@@ -25,6 +25,10 @@ class EffectPreset:
     speed: float = 1.0
 
 PRESETS: Dict[str, EffectPreset] = {
+    "original": EffectPreset(
+        id="original",
+        name="ORIGINAL",
+    ),
     "baby": EffectPreset(
         id="baby",
         name="BABY",

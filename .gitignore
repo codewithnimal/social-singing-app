@@ -15,9 +15,14 @@ venv/
 .venv/
 env/
 
-# Environment variables (Allowing .env files as requested by user)
-# .env
-# *.env
+# Environment variables and local runtime output
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/out.txt
 
 # Database files
 *.db

@@ -7,8 +7,8 @@ class Settings(BaseSettings):
     # Database
     POSTGRES_SERVER: str = "localhost"
     POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "ranju123"
-    POSTGRES_DB: str = "vcapp"
+    POSTGRES_PASSWORD: str = "nimal"
+    POSTGRES_DB: str = "vibelydb"
     POSTGRES_PORT: str = "5432"
 
     # Object Storage (Abstracted)
@@ -22,10 +22,13 @@ class Settings(BaseSettings):
     S3_BUCKET_NAME: str = "vcapp-audio"
     S3_REGION_NAME: str = "us-east-1"
 
+    # Security
+    SECRET_KEY: str = "vcapp_dev_secret_key_change_in_prod_32b"
+
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
         return f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
-    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
+    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True, extra="ignore")
 
 settings = Settings()

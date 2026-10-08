@@ -7,11 +7,12 @@ from typing import Optional
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 import os
+from src.core.config import settings
 
-# Secret key — load from env in production. Fallback is >= 32 bytes for HS256 (RFC 7518).
+# Secret key — load from env or settings. Fallback is >= 32 bytes for HS256 (RFC 7518).
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
-    "vcapp_dev_secret_key_change_in_prod_32b"
+    settings.SECRET_KEY
 )
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60  # 1 hour

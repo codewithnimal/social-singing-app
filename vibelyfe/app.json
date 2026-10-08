@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "Vibely",
+    "slug": "vibely",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "vibely",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F8FBFF",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.vibely.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F8FBFF",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.vibely.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Vibely needs your microphone to record singing messages for friends."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

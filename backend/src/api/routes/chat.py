@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status, UploadFile, File, Form
 from fastapi.responses import FileResponse
+import mimetypes
 import os
 from src.core.config import settings
 from sqlalchemy.orm import Session
@@ -142,7 +143,8 @@ def serve_audio(
     if not os.path.exists(full_path):
         raise HTTPException(status_code=404, detail="Audio file not found")
         
-    return FileResponse(full_path, media_type="audio/wav")
+    media_type = mimetypes.guess_type(full_path)[0] or "application/octet-stream"
+    return FileResponse(full_path, media_type=media_type)
 
 @router.get("/history/{friend_id}", response_model=PaginatedMessages)
 def get_message_history(
